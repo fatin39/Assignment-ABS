@@ -1,0 +1,44 @@
+public class Schedule_Final {
+		private int currentYear, currentMonth, currentDay;
+		private int bookingYear, bookingMonth, bookingDay;
+		private int duration, durationYear, durationMonth, durationDay;
+		
+		public void Schedule(){
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTimeInMillis(duration);
+		currentYear = cal.get(Calendar.YEAR);
+		currentMonth = cal.get(Calendar.MONTH);
+		currentDay = cal.get(Calendar.DAY_OF_MONTH);
+		}
+
+		public int calcDuration(){
+			durationYear = bookingYear - currentYear;
+			durationMonth = bookingMonth - currentMonth;
+			durationDay = bookingDay - bookingMonth;
+			
+			if(durationMonth == 0 || durationYear == 0) {
+				duration = durationDay;
+			}
+			else if(durationMonth != 0 && durationYear == 0) {
+				for(int i = 0; i <= 12; i++) {
+					if(bookingMonth == 1 || bookingMonth == 3 ||bookingMonth == 5 ||bookingMonth == 7 ||bookingMonth == 8 ||bookingMonth == 10 ||bookingMonth == 12)
+						duration = durationDay + durationMonth*31;
+					else if(bookingMonth == 4 || bookingMonth == 6 || bookingMonth == 9 ||bookingMonth == 11)
+							duration = durationDay + durationMonth*30;
+					else 
+						duration = durationDay + durationMonth*28;
+				}
+			}
+			else if(durationMonth != 0 && durationYear != 0){
+				for(int i = 0; i <= 12; i++){
+					if(bookingMonth == 1 || bookingMonth == 3 || bookingMonth == 5 || bookingMonth == 7 ||
+							bookingMonth == 8 || bookingMonth == 10 || bookingMonth == 12)
+						duration = durationDay + durationMonth*31 + durationYear*365;
+					else if(bookingMonth == 4 || bookingMonth == 6 || bookingMonth == 9 || bookingMonth == 11)
+						duration = durationDay + durationMonth*30 + durationYear*365;
+					else
+						duration = durationDay + durationMonth*28 + durationYear*365;
+				}
+		}
+		return duration;
+		}
