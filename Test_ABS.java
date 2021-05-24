@@ -1,24 +1,17 @@
-package Appointment_Booking_System_TestClass;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import Appointment_Booking_System_Class.Doctor;
-import Appointment_Booking_System_Class.Hospital;
-import Appointment_Booking_System_Class.Patient;
-import Appointment_Booking_System_Class.Schedule;
-
-public class Test_ABS {
+public class TestHospital {
 
 	public static void main(String[] args) {
 		
 		//file		
 		File hosp = new File("C:\\Users\\naomi chan\\eclipse-workspace\\simple programme\\src\\Hosps.txt");	//info hosp
-		File dr1 = new File("C:\\Users\\naomi chan\\eclipse-workspace\\simple programme\\src\\drHosp2.txt"); 
-		File dr2 = new File("C:\\Users\\naomi chan\\eclipse-workspace\\simple programme\\src\\drHosp2.txt");	//hospital2,specialty,doc 
+		//File dr = new File("C:\\Users\\naomi chan\\eclipse-workspace\\simple programme\\src\\"+HosptalID+".txt"); 
+		//File dr2 = new File("C:\\Users\\naomi chan\\eclipse-workspace\\simple programme\\src\\drHosp2.txt");	//hospital2,specialty,doc 
 
 		/*if(!dr1.exists() || ! dr2.exists() ){
 			System.out.println("The file does not exist!");
@@ -29,13 +22,13 @@ public class Test_ABS {
 		//scanner
 		Scanner inHosp = null;
 		Scanner in1 = null;
-		Scanner in2 = null;
-		
+		//Scanner dr = null;
+    
 		try {
 			inHosp = new Scanner(hosp);
 			//inHosp2 = new Scanner(hosp2);
 
-			in1 = new Scanner(dr1);
+			//in1 = new Scanner(dr);
 			//in2 = new Scanner(dr2);
 		}
 		catch(FileNotFoundException e) {
@@ -46,18 +39,31 @@ public class Test_ABS {
 		//arraylist
 		ArrayList<Hospital> hospitals = new ArrayList();
 		ArrayList<Doctor> doctor_list = new ArrayList();
-
+		String hospID;
 		//read hospitalList 
 		inHosp.useDelimiter(";");
 		while(inHosp.hasNext()) {
 			String hospName = inHosp.next();
 			String hospWorkingHour = inHosp.next();
 			String hospAddress = inHosp.next();
+			hospID = inHosp.next();
 		
-			hospitals.add(new Hospital(hospName,hospWorkingHour,null, hospAddress, 0, null)); //can add other argu
+			hospitals.add(new Hospital(hospName,hospWorkingHour,hospAddress,hospID)); //can add other argu
 		}
-		/**read the doctors along with its specialty in hospital 1*/
-		in1.useDelimiter(";"); 
+
+		/*read the doctors along with its specialty in hospital 1
+		File dr = new File("C:\\Users\\naomi chan\\eclipse-workspace\\simple programme\\src\\"+hospID+".txt");
+    	try {
+
+			in1 = new Scanner(dr);
+			//in2 = new Scanner(dr2);
+		}
+		catch(FileNotFoundException e) {
+				System.out.println("   file not found ");
+				System.exit(0);
+		}
+    	
+		in1.useDelimiter(":"); 
 		while(in1.hasNext()){
 			String specialty = in1.next(); //specialty is better to put in doctor class
 			String drName = in1.next();
@@ -68,9 +74,9 @@ public class Test_ABS {
 			///so Hospital class must have addDoctor(doctor: Doctor) method)
 			///doctor_list.add(new Doctor(specialty,drName, drId, drPhone,new Schedule(scheduleDate,scheduleTime)));
 			//hospitals.get(0).addDoctor(doctor_list.add(new Doctor(specialty,drName, drId, drPhone,new Schedule(scheduleDate,scheduleTime))));
-			hospitals.get(0).addDoctor(new Doctor(specialty,drName, drId, drPhone,new Schedule(scheduleDate,scheduleTime, drPhone, drPhone, null, null)));
+			hospitals.get(0).addDoctor(new Doctor(specialty,drName, drId, drPhone,new Schedule(scheduleDate,scheduleTime)));
 			///hospitals.get(0).addDoctor(doctor_list);
-		}
+		}*/
 
 
 		/**write the same code with atas punya code for hospital 2 to read the doctors in hospital 2
@@ -95,6 +101,7 @@ public class Test_ABS {
 		String email = input.next();
 		System.out.println("Enter DOB: ");
 		String DOB = input.nextLine();
+		input.nextLine();
 		System.out.println("Enter password: ");
 		String password = input.nextLine();
 		System.out.println("Enter phone: ");
@@ -104,12 +111,12 @@ public class Test_ABS {
 		
 		/*Booking details */
 		for(int i = 0 ; i< hospitals.size(); i++) {
-			System.out.println((i+1) + ")" + hospitals.get(i));
+			System.out.print("\n" +(i+1) + ")" + hospitals.get(i));
 		}
 		System.out.println("Enter hospital (0 - hosp1, 1 - hosp 2) :");
 		int hos = input.nextInt();
 
-		for (int i = 0; i < hospitals.get(hos).getDoctor().size();i++) {
+		/*for (int i = 0; i < hospitals.get(hos).getDoctor().size();i++) {
 			System.out.println(hospitals.get(hos).getDoctor().get(i));
 		}
 
@@ -125,5 +132,47 @@ public class Test_ABS {
 		System.out.println("Enter booking ID: ");
 		String s = input.next();
 		int bookingID = Integer.parseInt(s);
+		
+		String bookDate = input.nextLine();	//   
+		System.out.println("enter booking time(1 = 8-10am....): ");
+		String bookTime = input.nextLine();	//
+
+		for(int i = 0; i < hospitals.get(hos).getDoctor().size(); i++){
+			if(hospitals.get(hos).getDoctor().get(i).getDoctorName().equals(docName)){
+				Booking booking = new Booking(bookingID, bookDate, bookTime, hospitals.get(hos));
+				patientlist.add(new Patient(userID,name,email,DOB,password,phone,historyRecord,booking,hospitals.get(hos),hospitals.get(hos).getDoctor().get(i)));//hospitals.get(hos).getDoctor().get(i), booking, hospitals.get(hos)));
+				System.out.println(patientlist.get(i).toString(i));
+			}
+			else
+				System.out.println("not matching");
+				System.exit(0);
+		}*/
+		/*System.out.println("enter schedule to book: ");		//int or string, because its date
+		int bookDate = Integer.parseInt(input.nextLine());
+		System.out.println("enter booking time(1 = 8-10am....): ");
+		int bookTime = Integer.parseInt(input.nextLine());
+		Hospital hospital = null;
+		if(hos ==1) {
+			for(int i = 0 ; i< doctor_list.size(); i++) {
+				if(docName.equals(doctor_list.get(i).getDoctorName())) {
+					Doctor doc = new Doctor(doctor_list.get(i).getSpecialty(),doctor_list.get(i).getDoctorName(),doctor_list.get(i).getDoctorID(),doctor_list.get(i).getPhone(),new Schedule(bookDate,bookTime));
+					//hospital = new Hospital(hospitals.get(0).getHospitalName(), hospitals.get(0).getHospitalWorkingHours(), hospitals.get(0).getAddress(),bookingID, 
+						//	new Doctor(doctor_list.get(i).getSpecialty(),doctor_list.get(i).getDoctorName(),doctor_list.get(i).getDoctorID(),doctor_list.get(i).getPhone(),new Schedule(bookDate,bookTime)));
+					System.out.println(doc.toString());
+					//System.out.println(hospital.toString());
+
+					//Doctor doctor = new Doctor(doctor_list.get(i).getSpecialty(),doctor_list.get(i).getDoctorName(),doctor_list.get(i).getDoctorID(),doctor_list.get(i).getPhone(),new Schedule(bookDate,bookTime));
+				}
+			}
+			//Hospital hosp = new Hospital(hospitals.get(0).getHospitalName(), hospitals.get(0).getWorkingHour(), hospitals.get(0).getAddress(),doctor);
+			//Booking booking = new Booking(bookingID, bookingDate, bookingTime, hosp1);
+			//Patient patient = new Patient();
+		}
+		else if(hos ==2) {
+			
+		}
+		*/
+		
+	}
+
   }
-}
